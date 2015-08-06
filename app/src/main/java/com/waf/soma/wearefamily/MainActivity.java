@@ -1,6 +1,7 @@
 package com.waf.soma.wearefamily;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +24,10 @@ public class MainActivity extends Activity {
         set.setJavaScriptEnabled(true);
         set.setBuiltInZoomControls(true);
         webview.loadUrl("http://www.google.com");
+
+        Intent myIntent = new Intent(this,MainService.class);
+        startService(myIntent);
+
     }
     class WebClient extends WebViewClient {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
