@@ -37,16 +37,9 @@
         android:orientation="horizontal"
         android:layout_weight="2">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="동의"
-            android:layout_weight="1"
             android:id="@+id/btnAgree" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="동의하지않음"
-            android:layout_weight="1"
-            android:id="@+id/btnDisagree" />
     </LinearLayout>
 </LinearLayout>
