@@ -25,8 +25,8 @@ import java.util.Vector;
  */
 public class HttpTask extends AsyncTask<Void,Void,String> {
 
-    //접속할주소
-    private final String urlPath = "http://127.0.0.1/phpTest.php";
+    //TODO 서버 주소 확인
+    private final String urlPath = "http://172.16.101.82/phpTest.php";
     private final String TAG = "HttpTest";
 
     @Override
@@ -74,7 +74,7 @@ public class HttpTask extends AsyncTask<Void,Void,String> {
             e.printStackTrace();
         }
         //오류시 null 반환
-        return null;
+        return "";
     }
 
     //asyonTask 3번째 인자와 일치 매개변수값 -> doInBackground 리턴값이 전달됨

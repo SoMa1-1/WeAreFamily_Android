@@ -55,7 +55,6 @@ public class MainService extends Service {
                     mCount,location.getLatitude(),location.getLongitude(),location.getAltitude());
             Log.i(TAG,sloc);
 
-            //new HttpTask().execute();
         }
         public void onProviderDisabled(String provider){
             Log.i(TAG,"현재 상태 : 서비스 사용 불가");
