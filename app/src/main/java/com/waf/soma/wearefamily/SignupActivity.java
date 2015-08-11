@@ -1,11 +1,14 @@
 package com.waf.soma.wearefamily;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 
@@ -21,6 +24,18 @@ public class SignupActivity extends Activity {
                 this,R.array.position, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         posSpinner.setAdapter(adapter);
+
+
+        Button btnSignup = (Button) findViewById(R.id.btnSignup);
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignupActivity.this, PolicyActivity.class);
+                startActivity(intent);
+
+                finish();
+            }
+        });
     }
 
     @Override
