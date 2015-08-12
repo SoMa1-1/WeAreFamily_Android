@@ -26,10 +26,6 @@ public class MainActivity extends Activity {
         webview.loadUrl("http://www.google.com");
 
 
-        //TODO HTTP접속 테스트
-        new HttpTask().execute();
-
-
         Intent myIntent = new Intent(this,MainService.class);
         startService(myIntent);
 

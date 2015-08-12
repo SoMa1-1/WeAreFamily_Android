@@ -66,7 +66,7 @@ public class MainService extends Service {
             nameValue.add(new BasicNameValuePair("longitude",Double.toString(location.getLongitude())));
             nameValue.add(new BasicNameValuePair("altitude",Double.toString(location.getAltitude())));
 
-            new HttpTask().executor(/*nameValue*/);
+            new HttpTask().execute(nameValue);
 
         }
         public void onProviderDisabled(String provider){

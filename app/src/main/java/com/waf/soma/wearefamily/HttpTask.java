@@ -23,36 +23,28 @@ import java.util.Vector;
 /**
  * Created by Abj on 2015. 8. 8..
  */
-public class HttpTask extends AsyncTask<Void,Void,String> {
+public class HttpTask extends AsyncTask<Vector<NameValuePair>,Void,String> {
 
     //TODO 서버 주소 확인
     private final String urlPath = "http://172.16.101.80/phpTest.php";
     private final String TAG = "HttpTest";
 
-//    private Vector<NameValuePair> nameValue;
-
-    public void executor(/*Vector<NameValuePair> nameValue*/){
-
-//        this.nameValue=nameValue;
-
-        this.execute();
-    }
-
     @Override
-    protected String doInBackground(Void... voids) {
+    protected String doInBackground(Vector<NameValuePair>... nv) {
 
         try{
             Log.i(TAG,"doInBackground()");
 
             HttpPost request = new HttpPost(urlPath);
             //전달할 인자들
-            Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-            nameValue.add(new BasicNameValuePair("name", "홍길동"));
-            nameValue.add(new BasicNameValuePair("age", "24"));
-            nameValue.add(new BasicNameValuePair("sex", "male"));
+//            Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
+//            nameValue.add(new BasicNameValuePair("name", "홍길동"));
+//            nameValue.add(new BasicNameValuePair("age", "24"));
+//            nameValue.add(new BasicNameValuePair("sex", "male"));
+
 
             //웹 접속 - utf-8 방식으로
-            HttpEntity enty = new UrlEncodedFormEntity(nameValue, HTTP.UTF_8);
+            HttpEntity enty = new UrlEncodedFormEntity(nv[0], HTTP.UTF_8);
             request.setEntity(enty);
 
             HttpClient client = new DefaultHttpClient();
