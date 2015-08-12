@@ -26,8 +26,17 @@ import java.util.Vector;
 public class HttpTask extends AsyncTask<Void,Void,String> {
 
     //TODO 서버 주소 확인
-    private final String urlPath = "http://172.16.101.82/phpTest.php";
+    private final String urlPath = "http://172.16.101.80/phpTest.php";
     private final String TAG = "HttpTest";
+
+//    private Vector<NameValuePair> nameValue;
+
+    public void executor(/*Vector<NameValuePair> nameValue*/){
+
+//        this.nameValue=nameValue;
+
+        this.execute();
+    }
 
     @Override
     protected String doInBackground(Void... voids) {
@@ -84,4 +93,5 @@ public class HttpTask extends AsyncTask<Void,Void,String> {
         super.onPostExecute(value);
         Log.i(TAG, value);
     }
+
 }

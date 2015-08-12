@@ -14,6 +14,11 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.Vector;
+
 public class MainService extends Service {
 
     LocationManager mLocMan;
@@ -54,6 +59,14 @@ public class MainService extends Service {
             String sloc = String.format("수신회수:%d 위도:%f 경도:%f 고도:%f",
                     mCount,location.getLatitude(),location.getLongitude(),location.getAltitude());
             Log.i(TAG,sloc);
+
+            //서버로 위치정보 post
+            Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
+            nameValue.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
+            nameValue.add(new BasicNameValuePair("longitude",Double.toString(location.getLongitude())));
+            nameValue.add(new BasicNameValuePair("altitude",Double.toString(location.getAltitude())));
+
+            new HttpTask().executor(/*nameValue*/);
 
         }
         public void onProviderDisabled(String provider){
