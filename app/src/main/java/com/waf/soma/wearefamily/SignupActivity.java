@@ -1,9 +1,8 @@
 package com.waf.soma.wearefamily;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-
-public class SignupActivity extends Activity {
+public class SignupActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +28,11 @@ public class SignupActivity extends Activity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignupActivity.this, PolicyActivity.class);
-                startActivity(intent);
 
-                finish();
+                DialogFragment dialog = new PolicyDialog();
+                dialog.show(getSupportFragmentManager(),"PolicyDialog");
+
+                //finish();
             }
         });
     }

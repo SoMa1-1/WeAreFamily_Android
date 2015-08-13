@@ -14,4 +14,5 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_title">TitleActivity</string>
+    <string name="title_activity_policy_dialog">PolicyDialog</string>
 </resources>

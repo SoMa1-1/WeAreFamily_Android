@@ -20,10 +20,6 @@
             android:label="@string/title_activity_signup" >
         </activity>
         <activity
-            android:name=".PolicyActivity"
-            android:label="@string/title_activity_policy" >
-        </activity>
-        <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
@@ -37,8 +33,11 @@
         <activity
             android:name=".TitleActivity"
             android:label="@string/title_activity_title" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
