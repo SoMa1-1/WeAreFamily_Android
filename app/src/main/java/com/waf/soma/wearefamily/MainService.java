@@ -1,8 +1,10 @@
 package com.waf.soma.wearefamily;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -23,35 +25,53 @@ public class MainService extends Service {
 
     LocationManager mLocMan;
     String mProvider;
-    String TAG="TEST";
+    String TAG="service";
     int mCount;
+
+    private BroadcastReceiver lockReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                //Log.i(TAG, "action_screen_on / time : " + System.currentTimeMillis());
+
+                //서버로 현재 시간 전송
+                Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
+                nameValue.add(new BasicNameValuePair("screenon", Long.toString(System.currentTimeMillis())));
+
+                new HttpTask().execute(nameValue);
+            }
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                //Log.i(TAG, "action_screen_off / time : " + System.currentTimeMillis());
+
+                //서버로 현재 시간 전송
+                Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
+                nameValue.add(new BasicNameValuePair("screenoff", Long.toString(System.currentTimeMillis())));
+
+                new HttpTask().execute(nameValue);
+            }
+        }
+    };
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        Log.i(TAG, "onCreate 호출");
+        Log.i(TAG, "MainService onCreate 호출");
+
+        registerBR();
+
         mLocMan = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mProvider = mLocMan.getBestProvider(new Criteria(),true);
-
-        //원래 OnResume에 있던 코드
         mLocMan.requestLocationUpdates(mProvider, 3000, 10, mListener);
     }
 
-    /*
-    public void onResume(){
-        super.onResume();
-        mCount=0;
-        //
-        Log.i(TAG,"현재 상태 : 서비스 시작");
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null)
+            registerBR();
+        return START_STICKY;
     }
-
-    public void onPause(){
-        super.onPause();
-        mLocMan.removeUpdates(mListener);
-        Log.i(TAG,"현재 상태 : 서비스 정지");
-    }
-    */
 
     LocationListener mListener = new LocationListener(){
         public void onLocationChanged(Location location){
@@ -100,5 +120,17 @@ public class MainService extends Service {
         //throw new UnsupportedOperationException("Not yet implemented");
 
         return null;
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(lockReceiver);
+    }
+
+    private void registerBR() {
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(lockReceiver, filter);
     }
 }

@@ -39,11 +39,6 @@
             android:label="@string/title_activity_title" >
         </activity>
 
-        <receiver
-            android:name=".LockReceiver"
-            android:enabled="true"
-            android:exported="true" >
-        </receiver>
     </application>
 
 </manifest>
