@@ -10,7 +10,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
 import java.io.BufferedReader;
@@ -25,14 +24,16 @@ import java.util.Vector;
  */
 public class HttpTask extends AsyncTask<Vector<NameValuePair>,Void,String> {
 
-    //TODO 서버 주소 확인
-    private final String urlPath = "http://192.168.219.102/phpTest.php";
     private final String TAG = "HttpTest";
+    private String urlPath;
 
     @Override
     protected String doInBackground(Vector<NameValuePair>... nv) {
 
         try{
+            urlPath = new String(nv[0].elementAt(0).getValue());
+            Log.i(TAG,urlPath);
+
             HttpPost request = new HttpPost(urlPath);
 
             //웹 접속 - utf-8 방식으로
@@ -64,6 +65,8 @@ public class HttpTask extends AsyncTask<Vector<NameValuePair>,Void,String> {
         }catch(UnsupportedEncodingException e){
             e.printStackTrace();
         }catch(IOException e){
+            e.printStackTrace();
+        }catch(IllegalArgumentException e){
             e.printStackTrace();
         }
         //오류시 null 반환

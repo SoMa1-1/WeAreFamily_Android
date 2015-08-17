@@ -13,8 +13,6 @@ import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -37,6 +35,7 @@ public class MainService extends Service {
 
                 //서버로 현재 시간 전송
                 Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
+                nameValue.add(new BasicNameValuePair("url", "http://192.168.219.109/phpTest.php"));
                 nameValue.add(new BasicNameValuePair("screenon", Long.toString(System.currentTimeMillis())));
 
                 new HttpTask().execute(nameValue);
@@ -46,6 +45,7 @@ public class MainService extends Service {
 
                 //서버로 현재 시간 전송
                 Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
+                nameValue.add(new BasicNameValuePair("url", "http://192.168.219.109/phpTest.php"));
                 nameValue.add(new BasicNameValuePair("screenoff", Long.toString(System.currentTimeMillis())));
 
                 new HttpTask().execute(nameValue);
@@ -76,15 +76,15 @@ public class MainService extends Service {
     LocationListener mListener = new LocationListener(){
         public void onLocationChanged(Location location){
             mCount++;
-            String sloc = String.format("수신회수:%d 위도:%f 경도:%f 고도:%f",
-                    mCount,location.getLatitude(),location.getLongitude(),location.getAltitude());
+            String sloc = String.format("수신회수:%d 위도:%f 경도:%f",
+                    mCount,location.getLatitude(),location.getLongitude());
             Log.i(TAG,sloc);
 
             //서버로 위치정보 post
             Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
+            nameValue.add(new BasicNameValuePair("url", "http://192.168.219.109/phpTest.php"));
             nameValue.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
-            nameValue.add(new BasicNameValuePair("longitude",Double.toString(location.getLongitude())));
-            nameValue.add(new BasicNameValuePair("altitude",Double.toString(location.getAltitude())));
+            nameValue.add(new BasicNameValuePair("longitude", Double.toString(location.getLongitude())));
 
             new HttpTask().execute(nameValue);
 
