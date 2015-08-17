@@ -89,7 +89,7 @@
             <TextView
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:text="관계"
+                android:text="역할"
                 android:id="@+id/textView"
                 android:gravity="center"
                 android:layout_weight="3"

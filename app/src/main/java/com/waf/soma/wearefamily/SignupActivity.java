@@ -1,17 +1,21 @@
 package com.waf.soma.wearefamily;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.Vector;
 
 public class SignupActivity extends FragmentActivity {
 
@@ -34,13 +38,32 @@ public class SignupActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
 
-                //DialogFragment dialog = new PolicyDialog();
-                //dialog.show(getSupportFragmentManager(),"PolicyDialog");
+                EditText editPIN = (EditText)findViewById(R.id.editPIN);
+                EditText editName = (EditText)findViewById(R.id.editName);
+                Spinner posSpinner = (Spinner) findViewById(R.id.posSpinner);
 
-                DialogFragment dialog = new CertificationDialog();
-                dialog.show(getSupportFragmentManager(), "CertificationDialog");
+                if(editName.getText().toString().equals("")) {
+                    //이름이 비어있음
+                    Toast.makeText(getApplicationContext(),"이름을 입력해주세요.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                //finish();
+                Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
+                nameValue.add(new BasicNameValuePair("url", "http://192.168.219.109/phpTest.php"));
+                nameValue.add(new BasicNameValuePair("pin", editPIN.getText().toString()));
+                nameValue.add(new BasicNameValuePair("name", editName.getText().toString()));
+                nameValue.add(new BasicNameValuePair("position", posSpinner.getSelectedItem().toString()));
+
+                new HttpTask().execute(nameValue);
+
+                if(false /*TODO 핀번호 잘못되는 조건 입력*/) {
+                    //PIN번호가 잘못됨
+                    Toast.makeText(getApplicationContext(),"PIN번호가 유효하지 않습니다.",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    DialogFragment dialog = new PolicyDialog();
+                    dialog.show(getSupportFragmentManager(), "PolicyDialog");
+                }
             }
         });
     }
