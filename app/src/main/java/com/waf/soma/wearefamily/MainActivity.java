@@ -2,8 +2,7 @@ package com.waf.soma.wearefamily;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +17,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences setting = getSharedPreferences("setting", 0);
+        SharedPreferences.Editor editor = setting.edit();
+        //TODO 두번째 인자를 true로 설정하면 자동로그인 활성화
+        editor.putBoolean("isLogined", false);
+        editor.commit();
 
         WebView webview = (WebView)findViewById(R.id.webview);
         webview.setWebViewClient(new WebClient()); // 응룡프로그램에서 직접 url 처리

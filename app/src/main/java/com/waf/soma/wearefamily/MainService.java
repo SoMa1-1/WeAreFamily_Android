@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -31,26 +32,30 @@ public class MainService extends Service {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                //Log.i(TAG, "action_screen_on / time : " + System.currentTimeMillis());
 
-                //서버로 현재 시간 전송
-                Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-                nameValue.add(new BasicNameValuePair("url", url));
-                nameValue.add(new BasicNameValuePair("screenon", Long.toString(System.currentTimeMillis())));
+        SharedPreferences setting;
+        setting = getSharedPreferences("setting", 0);
 
-                new HttpTask().execute(nameValue);
-            }
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                //Log.i(TAG, "action_screen_off / time : " + System.currentTimeMillis());
+        if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
 
-                //서버로 현재 시간 전송
-                Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-                nameValue.add(new BasicNameValuePair("url", url));
-                nameValue.add(new BasicNameValuePair("screenoff", Long.toString(System.currentTimeMillis())));
+            //서버로 현재 시간 전송
+            Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
+            nameValue.add(new BasicNameValuePair("url", url));
+            nameValue.add(new BasicNameValuePair("m_duid", setting.getString("token","")));
+            nameValue.add(new BasicNameValuePair("event", "1"));
 
-                new HttpTask().execute(nameValue);
-            }
+            new HttpTask().execute(nameValue);
+        }
+        if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+
+            //서버로 현재 시간 전송
+            Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
+            nameValue.add(new BasicNameValuePair("url", url));
+            nameValue.add(new BasicNameValuePair("m_duid", setting.getString("token","")));
+            nameValue.add(new BasicNameValuePair("event", "0"));
+
+            new HttpTask().execute(nameValue);
+        }
         }
     };
 
@@ -79,23 +84,27 @@ public class MainService extends Service {
             mCount++;
             String sloc = String.format("수신회수:%d 위도:%f 경도:%f",
                     mCount,location.getLatitude(),location.getLongitude());
-            Log.i(TAG,sloc);
+            //Log.i(TAG,sloc);
+
+            SharedPreferences setting;
+            setting = getSharedPreferences("setting", 0);
 
             //서버로 위치정보 post
             Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
             nameValue.add(new BasicNameValuePair("url", url));
-            nameValue.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
-            nameValue.add(new BasicNameValuePair("longitude", Double.toString(location.getLongitude())));
+            nameValue.add(new BasicNameValuePair("m_duid", setting.getString("token","")));
+            nameValue.add(new BasicNameValuePair("lat", Double.toString(location.getLatitude())));
+            nameValue.add(new BasicNameValuePair("lon", Double.toString(location.getLongitude())));
 
             new HttpTask().execute(nameValue);
 
         }
         public void onProviderDisabled(String provider){
-            Log.i(TAG,"현재 상태 : 서비스 사용 불가");
+            //Log.i(TAG,"현재 상태 : 서비스 사용 불가");
         }
 
         public void onProviderEnabled(String provider){
-            Log.i(TAG,"현재 상태 : 서비스 사용 가능");
+            //Log.i(TAG,"현재 상태 : 서비스 사용 가능");
         }
 
         public void onStatusChanged(String provider,int status,Bundle extras){
@@ -111,7 +120,7 @@ public class MainService extends Service {
                     sStatus="사용 가능";
                     break;
             }
-            Log.i(TAG, provider+"상태 변경 : "+sStatus);
+            //Log.i(TAG, provider+"상태 변경 : "+sStatus);
         }
     };
 
