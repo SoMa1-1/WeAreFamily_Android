@@ -24,6 +24,7 @@ public class MainService extends Service {
     LocationManager mLocMan;
     String mProvider;
     String TAG="service";
+    final String url="http://172.16.101.27:3000/gps";
     int mCount;
 
     private BroadcastReceiver lockReceiver = new BroadcastReceiver() {
@@ -35,7 +36,7 @@ public class MainService extends Service {
 
                 //서버로 현재 시간 전송
                 Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-                nameValue.add(new BasicNameValuePair("url", "http://192.168.219.109/phpTest.php"));
+                nameValue.add(new BasicNameValuePair("url", url));
                 nameValue.add(new BasicNameValuePair("screenon", Long.toString(System.currentTimeMillis())));
 
                 new HttpTask().execute(nameValue);
@@ -45,7 +46,7 @@ public class MainService extends Service {
 
                 //서버로 현재 시간 전송
                 Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-                nameValue.add(new BasicNameValuePair("url", "http://192.168.219.109/phpTest.php"));
+                nameValue.add(new BasicNameValuePair("url", url));
                 nameValue.add(new BasicNameValuePair("screenoff", Long.toString(System.currentTimeMillis())));
 
                 new HttpTask().execute(nameValue);
@@ -82,7 +83,7 @@ public class MainService extends Service {
 
             //서버로 위치정보 post
             Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-            nameValue.add(new BasicNameValuePair("url", "http://192.168.219.109/phpTest.php"));
+            nameValue.add(new BasicNameValuePair("url", url));
             nameValue.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
             nameValue.add(new BasicNameValuePair("longitude", Double.toString(location.getLongitude())));
 

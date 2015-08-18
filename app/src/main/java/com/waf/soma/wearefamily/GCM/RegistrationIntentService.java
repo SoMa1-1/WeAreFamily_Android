@@ -3,9 +3,11 @@ package com.waf.soma.wearefamily.GCM;
 /**
  * Created by kimseungchul on 2015. 8. 12..
  */
+
 import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -47,6 +49,11 @@ public class RegistrationIntentService extends IntentService {
                 String scope = GoogleCloudMessaging.INSTANCE_ID_SCOPE;
                 // Instance ID에 해당하는 토큰을 생성하여 가져온다.
                 token = instanceID.getToken(default_senderId, scope, null);
+
+                SharedPreferences setting = getSharedPreferences("setting", 0);
+                SharedPreferences.Editor editor = setting.edit();
+                editor.putString("token", token);
+                editor.commit();
 
                 Log.i(TAG, "GCM Registration Token: " + token);
             }
