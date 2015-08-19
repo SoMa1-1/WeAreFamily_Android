@@ -25,7 +25,8 @@ public class MainService extends Service {
     LocationManager mLocMan;
     String mProvider;
     String TAG="service";
-    final String url="http://172.16.101.27:3000/gps";
+    final String url="http://61.43.139.11/gps";
+    final String url2="http://61.43.139.11/lock";
     int mCount;
 
     private BroadcastReceiver lockReceiver = new BroadcastReceiver() {
@@ -40,7 +41,7 @@ public class MainService extends Service {
 
             //서버로 현재 시간 전송
             Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-            nameValue.add(new BasicNameValuePair("url", url));
+            nameValue.add(new BasicNameValuePair("url", url2));
             nameValue.add(new BasicNameValuePair("m_duid", setting.getString("token","")));
             nameValue.add(new BasicNameValuePair("event", "1"));
 
@@ -50,7 +51,7 @@ public class MainService extends Service {
 
             //서버로 현재 시간 전송
             Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-            nameValue.add(new BasicNameValuePair("url", url));
+            nameValue.add(new BasicNameValuePair("url", url2));
             nameValue.add(new BasicNameValuePair("m_duid", setting.getString("token","")));
             nameValue.add(new BasicNameValuePair("event", "0"));
 
@@ -91,7 +92,7 @@ public class MainService extends Service {
 
             //서버로 위치정보 post
             Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-            nameValue.add(new BasicNameValuePair("url", url));
+            nameValue.add(new BasicNameValuePair("url", url+"?m_duid=\""+setting.getString("token","")+"\""));
             nameValue.add(new BasicNameValuePair("m_duid", setting.getString("token","")));
             nameValue.add(new BasicNameValuePair("lat", Double.toString(location.getLatitude())));
             nameValue.add(new BasicNameValuePair("lon", Double.toString(location.getLongitude())));
