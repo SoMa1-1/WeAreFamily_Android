@@ -14,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
-import com.waf.soma.wearefamily.GCM.GCMActivity;
-
 public class PolicyDialog extends DialogFragment {
     
 
@@ -33,7 +31,7 @@ public class PolicyDialog extends DialogFragment {
                 public void onClick(View v) {
                     dismiss();
 
-                    Intent myIntent = new Intent(getActivity(), GCMActivity.class);
+                    Intent myIntent = new Intent(getActivity(), MainActivity.class);
                     startActivity(myIntent);
 
                     getActivity().finish();

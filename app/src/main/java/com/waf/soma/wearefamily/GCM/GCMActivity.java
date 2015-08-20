@@ -8,11 +8,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +22,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.waf.soma.wearefamily.HttpTask;
 import com.waf.soma.wearefamily.MainActivity;
 import com.waf.soma.wearefamily.R;
+import com.waf.soma.wearefamily.SignupActivity;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -77,6 +78,11 @@ public class GCMActivity extends AppCompatActivity {
                     //mRegistrationButton.setEnabled(false);
                     String token = intent.getStringExtra("token");
                     //mInformationTextView.setText(token);
+
+                     SharedPreferences setting = getSharedPreferences("setting", 0);
+                     SharedPreferences.Editor editor = setting.edit();
+                     editor.putString("token", token);
+                     editor.commit();
 
                     Log.i(TAG, "보낼 토큰 번호"+token);
 
@@ -137,8 +143,19 @@ public class GCMActivity extends AppCompatActivity {
     }
 
     public void transActivity(){
-        Intent intent=new Intent(GCMActivity.this,MainActivity.class);
-        startActivity(intent);
+
+        SharedPreferences setting;
+        setting = getSharedPreferences("setting", 0);
+
+        //isLogined의 값에 따라 버튼을 눌렀을때 이동할 액티비티 분기
+        if (setting.getBoolean("isLogined", false)) {
+            Intent intent = new Intent(GCMActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(GCMActivity.this, SignupActivity.class);
+            startActivity(intent);
+        }
         finish();
     }
 

@@ -25,8 +25,8 @@ public class MainService extends Service {
     LocationManager mLocMan;
     String mProvider;
     String TAG="service";
-    final String url="http://61.43.139.11/gps";
-    final String url2="http://61.43.139.11/lock";
+    final String url="http://172.16.100.56/gps";
+    final String url2="http://172.16.100.56/lock";
     int mCount;
 
     private BroadcastReceiver lockReceiver = new BroadcastReceiver() {
@@ -85,14 +85,14 @@ public class MainService extends Service {
             mCount++;
             String sloc = String.format("수신회수:%d 위도:%f 경도:%f",
                     mCount,location.getLatitude(),location.getLongitude());
-            //Log.i(TAG,sloc);
+            Log.i(TAG,sloc);
 
             SharedPreferences setting;
             setting = getSharedPreferences("setting", 0);
 
             //서버로 위치정보 post
             Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-            nameValue.add(new BasicNameValuePair("url", url+"?m_duid=\""+setting.getString("token","")+"\""));
+            nameValue.add(new BasicNameValuePair("url", url+"?m_duid="+setting.getString("token","")));
             nameValue.add(new BasicNameValuePair("m_duid", setting.getString("token","")));
             nameValue.add(new BasicNameValuePair("lat", Double.toString(location.getLatitude())));
             nameValue.add(new BasicNameValuePair("lon", Double.toString(location.getLongitude())));
@@ -101,11 +101,11 @@ public class MainService extends Service {
 
         }
         public void onProviderDisabled(String provider){
-            //Log.i(TAG,"현재 상태 : 서비스 사용 불가");
+            Log.i(TAG,"현재 상태 : 서비스 사용 불가");
         }
 
         public void onProviderEnabled(String provider){
-            //Log.i(TAG,"현재 상태 : 서비스 사용 가능");
+            Log.i(TAG,"현재 상태 : 서비스 사용 가능");
         }
 
         public void onStatusChanged(String provider,int status,Bundle extras){
@@ -121,7 +121,7 @@ public class MainService extends Service {
                     sStatus="사용 가능";
                     break;
             }
-            //Log.i(TAG, provider+"상태 변경 : "+sStatus);
+            Log.i(TAG, provider+"상태 변경 : "+sStatus);
         }
     };
 

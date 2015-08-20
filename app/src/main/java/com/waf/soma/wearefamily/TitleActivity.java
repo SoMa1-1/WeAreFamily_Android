@@ -2,12 +2,12 @@ package com.waf.soma.wearefamily;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.waf.soma.wearefamily.GCM.GCMActivity;
 
 public class TitleActivity extends Activity {
 
@@ -21,23 +21,12 @@ public class TitleActivity extends Activity {
         handler.postDelayed(new Runnable() {
             public void run() {
 
-                SharedPreferences setting;
-                setting = getSharedPreferences("setting", 0);
-
-                Log.i("tokentest", setting.getString("token","tokenGetFailed"));
-
-                //isLogined의 값에 따라 버튼을 눌렀을때 이동할 액티비티 분기
-                if (setting.getBoolean("isLogined", false)) {
-                    Intent intent = new Intent(TitleActivity.this, MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(TitleActivity.this, SignupActivity.class);
-                    startActivity(intent);
-                }
+                Intent myIntent = new Intent(TitleActivity.this, GCMActivity.class);
+                startActivity(myIntent);
 
                 finish();
             }
-        }, 500);
+        }, 2000);
     }
 
     @Override

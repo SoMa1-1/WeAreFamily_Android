@@ -22,7 +22,7 @@ import java.util.Vector;
 
 public class SignupActivity extends FragmentActivity implements OnTaskCompleted {
 
-    final String posturl="http://61.43.139.11/pairing";
+    final String posturl="http://172.16.100.56/pairing";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class SignupActivity extends FragmentActivity implements OnTaskCompleted 
                     return;
                 }
 
-                String url="http://61.43.139.11/tv?code="+editPIN.getText().toString();
+                String url="http://172.16.100.56/tv?code="+editPIN.getText().toString();
                 Log.i("pin url test", url);
 
                 //get을 보내어 결과값은 아래의 onTaskCompleted 메소드를 통해 받는다
@@ -91,7 +91,7 @@ public class SignupActivity extends FragmentActivity implements OnTaskCompleted 
             setting = getSharedPreferences("setting", 0);
 
             Vector<NameValuePair> nameValue = new Vector<NameValuePair>();
-            nameValue.add(new BasicNameValuePair("url", posturl+"?m_duid=\""+setting.getString("token","")+"\""));
+            nameValue.add(new BasicNameValuePair("url", posturl+"?m_duid="+setting.getString("token","")));
 
             nameValue.add(new BasicNameValuePair("t_duid", json.getJSONArray("results").getJSONObject(0).getString("t_duid")));
             nameValue.add(new BasicNameValuePair("ip", json.getJSONArray("results").getJSONObject(0).getString("ip")));
