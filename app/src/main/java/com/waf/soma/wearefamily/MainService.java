@@ -25,8 +25,8 @@ public class MainService extends Service {
     LocationManager mLocMan;
     String mProvider;
     String TAG="service";
-    final String url="http://172.16.100.56/gps";
-    final String url2="http://172.16.100.56/lock";
+    final String url="http://172.16.100.56:3000/gps";
+    final String url2="http://172.16.100.56:3000/lock";
     int mCount;
 
     private BroadcastReceiver lockReceiver = new BroadcastReceiver() {

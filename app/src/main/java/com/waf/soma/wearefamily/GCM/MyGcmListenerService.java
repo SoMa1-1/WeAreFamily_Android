@@ -20,6 +20,7 @@ import com.waf.soma.wearefamily.R;
 
 public class MyGcmListenerService extends GcmListenerService {
 
+    static int pushID = 0;
     private static final String TAG = "MyGcmListenerService";
 
     /**
@@ -64,6 +65,6 @@ public class MyGcmListenerService extends GcmListenerService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(pushID++ /* ID of notification */, notificationBuilder.build());
     }
 }

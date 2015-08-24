@@ -22,7 +22,7 @@ import java.util.Vector;
 
 public class SignupActivity extends FragmentActivity implements OnTaskCompleted {
 
-    final String posturl="http://172.16.100.56/pairing";
+    final String posturl="http://172.16.100.56:3000/pairing";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class SignupActivity extends FragmentActivity implements OnTaskCompleted 
                     return;
                 }
 
-                String url="http://172.16.100.56/tv?code="+editPIN.getText().toString();
+                String url="http://172.16.100.56:3000/tv?code="+editPIN.getText().toString();
                 Log.i("pin url test", url);
 
                 //get을 보내어 결과값은 아래의 onTaskCompleted 메소드를 통해 받는다
